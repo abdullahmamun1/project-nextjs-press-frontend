@@ -1,28 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IPost } from "@/lib/types";
 import { NewsCard } from "./NewsCard";
+import { getPublicNews } from "../../_actions/getPublicNews";
 
-export async function PublicNewsList() {
-  const result = {
-    success: true,
-    data: [
-      {
-        id: "clx9f7t2c0004s6oqz8w1r3y5",
-        title: "Coastal Districts Brace for Early Monsoon Surge",
-        content:
-          "Meteorologists have warned of an unusually early monsoon front moving inland, with heavy rainfall expected across low-lying coastal districts within seventy-two hours. Local authorities have opened shelters and suspended ferry services on three major routes. Farmers in the region say the timing could damage standing crops that were already delayed by a dry planting season.",
-        thumbnail: "",
-        isFeatured: false,
-        status: "PUBLISHED",
-        tags: ["weather", "climate", "local"],
-        views: 124530,
-        isPremium: false,
-        authorId: "clx9f1c8d0002s6oq9k2l3m4n",
-        createdAt: new Date("2026-07-24T06:40:00.000Z"),
-        updatedAt: new Date("2026-07-24T06:40:00.000Z"),
-      },
-    ],
-  };
+export async function PublicNewsList({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const query = await searchParams;
+  const result = await getPublicNews({ query });
   if (!result.success || !result.data?.length) {
     return (
       <p className="py-12 text-center text-muted-foreground">
