@@ -1,16 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  LayoutDashboard,
-  FolderKanban,
-  BarChart3,
-  Users,
-  User,
-  Settings,
-  CreditCard,
-  LogOut,
-} from "lucide-react";
+import { User, Settings, LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -34,16 +25,17 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const navItems = [
-  { label: "Dashboard", href: "/", icon: LayoutDashboard },
-  { label: "Projects", href: "/projects", icon: FolderKanban },
-  { label: "Analytics", href: "/analytics", icon: BarChart3 },
-  { label: "Team", href: "/team", icon: Users },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Contact", href: "/contact" },
+  { label: "News", href: "/news" },
+  { label: "Premium", href: "/premium" },
 ];
 
 const userMenuItems = [
-  { label: "Profile", href: "/profile", icon: User },
-  { label: "Settings", href: "/settings", icon: Settings },
-  { label: "Billing", href: "/billing", icon: CreditCard },
+  { label: "Profile", icon: User, action: "profile" },
+  { label: "Settings", icon: Settings, action: "settings" },
 ];
 
 type IUser = {
@@ -76,8 +68,6 @@ type NavbarProps = {
 export function Navbar({ user }: NavbarProps) {
   const router = useRouter();
   const handleUsersMenuAction = async (action: string) => {
-    console.log("User Menu Action: ", action);
-
     if (action === "logout") {
       await logout();
       toast.success("User Logged Out Successfully");
@@ -102,7 +92,6 @@ export function Navbar({ user }: NavbarProps) {
               <NavigationMenuItem key={item.href}>
                 <NavigationMenuLink asChild>
                   <Link href={item.href} className="flex items-center gap-2">
-                    <item.icon className="size-4" aria-hidden="true" />
                     {item.label}
                   </Link>
                 </NavigationMenuLink>
@@ -140,8 +129,8 @@ export function Navbar({ user }: NavbarProps) {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 {userMenuItems.map((item) => (
-                  <DropdownMenuItem key={item.href} asChild>
-                    <Link href={item.href}>
+                  <DropdownMenuItem key={item.action} asChild>
+                    <Link href={item.action}>
                       <item.icon aria-hidden="true" />
                       {item.label}
                     </Link>

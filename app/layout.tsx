@@ -33,7 +33,7 @@ export default async function RootLayout({
         geistHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full">
         <Navbar user={user} />
         <Toaster position="top-right" richColors />
         {children}
